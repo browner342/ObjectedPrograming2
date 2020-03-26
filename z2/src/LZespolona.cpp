@@ -44,7 +44,7 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
   Wynik = Skl1 * sprzeznie(Skl2);
 
   //Mianownik
-  Mianownik = pow(2, Modul(Skl2));
+  Mianownik = Modul(Skl2) * Modul(Skl2);
 
   //Dzielenie cześci liczby zespolonej
   Wynik.re = Wynik.re / Mianownik;
@@ -54,7 +54,7 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
 }
 
 bool operator == (LZespolona Arg1, LZespolona Arg2){
-  double epsilon = 0.00001;
+  double epsilon = 0.055;
   if(fabs(Arg1.re - Arg2.re) < epsilon && fabs(Arg1.im - Arg2.im) < epsilon ){
     return true;
   }

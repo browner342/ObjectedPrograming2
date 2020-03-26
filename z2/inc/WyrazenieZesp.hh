@@ -30,8 +30,6 @@ struct WyrazenieZesp {
  * @return Strumien do wypisania
  */
 std::ostream& operator<<(std::ostream& StrmWy, WyrazenieZesp& WyrZ);
-std::istream& operator>>(std::istream& StrmWe, Operator& Op);
-std::istream& operator>>(std::istream& StrmWe, WyrazenieZesp& WyrZ);
 
 /**
  * Oblicza wyrazenie zespolone
