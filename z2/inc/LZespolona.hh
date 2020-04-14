@@ -16,43 +16,56 @@
 struct  LZespolona {
   double   re;    /*! Pole repezentuje czesc rzeczywista. */
   double   im;    /*! Pole repezentuje czesc urojona. */
-};
 
-/**
+  /**
  * Dodaje do siebie dwie liczby zespolone
  * 
- * @param[in] Skl1 - pierwszy skladnik dodawania
- * @param[in] Skl2 - drugi skladnik dodawania
- * @return Liczba zespolona, suma skladnikow Skl1 oraz Skl2  
+ * @param[in] Z2 - drugi skladnik dodawania
+ * @return Liczba zespolona 
  */
-LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);
+  LZespolona  operator + (LZespolona  Z2) const;
 
-/**
+  /**
  * Odejmune od siebie dwie liczby zespolone
  * 
- * @param[in] Skl1 - liczba zespolona odejmowana
- * @param[in] Skl2 - liczba zespolona odejmujaca
- * @return Liczba zespolona, roznica skladnikow Skl1 i Skl2  
+ * @param[in] Z2 - liczba zespolona odejmujaca
+ * @return Liczba zespolona
  */
-LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2);
+  LZespolona operator - (LZespolona  Z2) const;
 
-/**
+  /**
  * Mnozy przez siebie dwie liczby zespolone
  * 
- * @param[in] Skl1 - pierwszy skladnik mnozenia
- * @param[in] Skl2 - drugi skladnik mnozenia
- * @return Liczba zespolona, iloczyn skladników Skl1 oraz Skl2  
+ * @param[in] Z2 - drugi skladnik mnozenia
+ * @return Liczba zespolona
  */
-LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2);
+  LZespolona operator * (LZespolona  Z2) const;
 
-/**
+  /**
  * Dzieli przez dwie liczby zespolone
  * 
- * @param[in] Skl1 - pierwszy skladnik dzielenia
- * @param[in] Skl2 - drugi skladnik dzielenia
+ * @param[in] Z2 - drugi skladnik dzielenia
  * @return Liczba zespolona, iloraz skladnikow Skl1 oraz Skl2  
  */
-LZespolona operator / (LZespolona Skl1, LZespolona Skl2);
+LZespolona operator / (LZespolona Z2) const;
+
+  /**
+ * Sprzezenie liczby zespolonej
+ */
+  void Sprzezenie();
+
+  /**
+ * Oblicza modul liczby zespolonej
+ * @return double modul liczby zespolonej  
+ */
+  double Modul ();
+
+  
+};
+
+LZespolona  operator * (float liczba, LZespolona  &Z);
+
+LZespolona  operator * (LZespolona  &Z, float liczba);
 
 /**
  * Porownuje do siebie dwie liczby zespolone
@@ -62,22 +75,6 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2);
  * @return bool, true jesli sa rowne, jesli nie false  
  */
 bool operator == (LZespolona Arg1, LZespolona Arg2);
-
-/**
- * Sprzezenie liczby zespolonej
- * 
- * @param[in] Lz - liczba zespolona, na ktorej wykonywane bedzie sprzezenie
- * @return Liczba zespolona po sprzezeniu 
- */
-LZespolona  sprzeznie (LZespolona  Lz);
-
-/**
- * Oblicza modul liczby zespolonej
- * 
- * @param[in] Lz - liczba zespolona, z ktorej oblicznay bedzie modul
- * @return double modul liczby zespolonej  
- */
-double Modul (LZespolona Lz);
 
 /**
  * Pozwala operatorowi przesuniecia bitowego w prawo wypisac licze zespolona

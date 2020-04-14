@@ -17,7 +17,6 @@ struct BazaTestu {
   unsigned int    IndeksPytania; /* Numer pytania, ktore ma byc pobrane jako nastepne */
 };
 
-
 /*
  * Inicjalizuje test powiazany z dana nazwa.
  */

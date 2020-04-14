@@ -38,24 +38,11 @@ int main(int argc, char **argv)
   
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
     cout<<endl<<"Podaj wynik operacji: "<<WyrZ_PytanieTestowe<<endl;
-    cin>>LZespOdpowiedz;
+    LZespOdpowiedz = Oblicz(WyrZ_PytanieTestowe);
+    
 
-    LZPoprawnaOdp = Oblicz(WyrZ_PytanieTestowe);
-
-    if(cin.fail()){
-      Odp.Zle++;
-      cout<<"Blad. Prawidlowym wynikiem jest:"<<LZPoprawnaOdp<<endl;
-    }else{
-      if( LZespOdpowiedz == LZPoprawnaOdp){
-        Odp.Dobre++;
-        cout<<"Odpowiedz poprawna"<<endl;
-      }else{
-        Odp.Zle++;
-        cout<<"Blad. Prawidlowym wynikiem jest:"<<LZPoprawnaOdp<<endl;
-      }
-    }
+    cout<<LZespOdpowiedz<<endl;
   }
-
   
   cout << endl;
   cout << "Koniec testu" << endl;

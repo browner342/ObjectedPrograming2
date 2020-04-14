@@ -11,46 +11,51 @@
  * Zwraca:
  *    Sume dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
-  LZespolona  Wynik;
+LZespolona LZespolona::operator + (LZespolona  Z2) const{
+  Z2.re += this->re;  Z2.im += this->im;
+  return Z2;
+}
 
-  Wynik.re = Skl1.re + Skl2.re;
-  Wynik.im = Skl1.im + Skl2.im;
+LZespolona LZespolona::operator - (LZespolona  Z2) const{
+  Z2.re = this->re - Z2.re; Z2.im = this->im - Z2.im;
+  return Z2;
+}
+
+LZespolona  LZespolona::operator * (LZespolona  Z2) const{
+  LZespolona Wynik;
+
+  Wynik.re = (this->re * Z2.re) - (this->im * Z2.im);
+  Wynik.im = (this->im * Z2.re) + (this->re * Z2.im);
+  
   return Wynik;
 }
 
-LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2){
-  LZespolona  Wynik;
-
-  Wynik.re = Skl1.re - Skl2.re;
-  Wynik.im = Skl1.im - Skl2.im;
-  return Wynik;
+LZespolona  operator * (float liczba, LZespolona &Z){
+  Z.re *= liczba; Z.im *= liczba;
+  return Z;
 }
 
-LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2){
-  LZespolona  Wynik;
-
-  Wynik.re = (Skl1.re * Skl2.re) - (Skl1.im * Skl2.im);
-  Wynik.im = (Skl1.re * Skl2.im) + (Skl1.im * Skl2.re);
-
-  return Wynik;
+LZespolona  operator * (LZespolona &Z, float liczba){
+  Z.re *= liczba; Z.im *= liczba;
+  return Z;
 }
 
-LZespolona operator / (LZespolona Skl1, LZespolona Skl2){
+LZespolona LZespolona::operator / (LZespolona Z2) const{
   LZespolona Wynik;
   double Mianownik;
 
-  //Licznik
-  Wynik = Skl1 * sprzeznie(Skl2);
-
   //Mianownik
-  Mianownik = Modul(Skl2) * Modul(Skl2);
+  Mianownik = Z2.Modul() * Z2.Modul();
+
+  Z2.Sprzezenie();
+  //Licznik
+  Z2 = *this * Z2;
 
   //Dzielenie cześci liczby zespolonej
-  Wynik.re = Wynik.re / Mianownik;
-  Wynik.im = Wynik.im / Mianownik;
+  Z2.re = Z2.re / Mianownik;
+  Z2.im = Z2.im / Mianownik;
 
-  return Wynik;
+  return Z2;
 }
 
 bool operator == (LZespolona Arg1, LZespolona Arg2){
@@ -61,18 +66,16 @@ bool operator == (LZespolona Arg1, LZespolona Arg2){
   return false;
 }
 
-LZespolona  sprzeznie (LZespolona  Lz){
-  LZespolona  Wynik;
+void LZespolona::Sprzezenie (){
 
-  Wynik.re = Lz.re;
-  Wynik.im = (-1) * Lz.im;
-  return Wynik;
+  this->im = -this->im;
+
 }
 
-double Modul (LZespolona Lz){
+double LZespolona::Modul (){
   double Wynik;
 
-  Wynik = sqrt((Lz.re * Lz.re) + (Lz.im * Lz.im));
+  Wynik = sqrt((this->re * this->re) + (this->im * this->im));
   return Wynik;
 }
 
@@ -81,46 +84,9 @@ std::ostream& operator<<(std::ostream& StrmWy, LZespolona& Lz){
 }
 
 std::istream& operator>>(std::istream& StrmWe, LZespolona& Lz){
-  int Licznik = 1;
-  char Inne;
-  
-  StrmWe.clear();
-  std::cout<<"Twoja odpowiedz: ";
-
-  StrmWe >> Inne;
-  if(Inne != '('){StrmWe.setstate(std::ios::failbit);}
-  StrmWe >> Lz.re >> Lz.im;
-  StrmWe >> Inne;
-  if(Inne != 'i'){StrmWe.setstate(std::ios::failbit);}
-  StrmWe >> Inne;
-  if(Inne != ')'){StrmWe.setstate(std::ios::failbit);}
+  StrmWe>>Lz.re;
+  if(StrmWe.fail()){return StrmWe;}
+  StrmWe>>Lz.im;
   StrmWe.ignore();
-
-  std::cout<<std::endl;
-
-  while(StrmWe.fail()){
-    std::cerr<<"Blad formatu liczby zespolonej"<<std::endl;
-    if(Licznik == 3){
-      return StrmWe;
-    }
-
-    StrmWe.clear();
-    StrmWe.ignore(1000, '\n');
-
-    std::cout<<"Twoja odpowiedz: ";
-
-    StrmWe >> Inne;
-    if(Inne != '('){StrmWe.setstate(std::ios::failbit);}
-    StrmWe >> Lz.re >> Lz.im;
-    StrmWe >> Inne;
-    if(Inne != 'i'){StrmWe.setstate(std::ios::failbit);}
-    StrmWe >> Inne;
-    if(Inne != ')'){StrmWe.setstate(std::ios::failbit);}
-    StrmWe.ignore();
-
-    std::cout<<std::endl;
-
-    Licznik++;
-  }
   return StrmWe;
 }
