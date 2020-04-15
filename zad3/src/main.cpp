@@ -7,11 +7,15 @@ using namespace std;
 
 int main()
 {
-  UkladRownanLiniowych u;
+  UkladRownanLiniowych ukl;
 
-  cin>>u;
-  u.obliczCramer();
-  cout<<u;
+  cin>>ukl;
+  if(cin.fail()){
+    cerr<<"Wczytywanie bledne!"<<endl;
+    return BLAD;
+  }
+  ukl.obliczCramer();
+  cout<<ukl;
 
   return 0;
 }

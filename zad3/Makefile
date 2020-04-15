@@ -8,7 +8,7 @@ uklad_rownan: obj/main.o obj/UkladRownanLiniowych.o obj/Macierz.o obj/Wektor.o
                                    obj/Macierz.o obj/UkladRownanLiniowych.o
 
 obj/main.o: src/main.cpp inc/UkladRownanLiniowych.hh inc/Macierz.hh inc/Wektor.hh\
-        inc/rozmiar.h inc/typ.h
+        inc/rozmiar.h inc/typ.h inc/uklconst.h inc/blad.h
 	g++ ${CPPFLAGS} -o obj/main.o src/main.cpp
 
 obj/UkladRownanLiniowych.o: src/UkladRownanLiniowych.cpp inc/UkladRownanLiniowych.hh

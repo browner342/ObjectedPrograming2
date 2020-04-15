@@ -1,13 +1,5 @@
 #include "Wektor.hh"
 
-
-/*
- *  Tutaj nalezy zdefiniowac odpowiednie metody
- *  klasy Wektor, ktore zawieraja wiecej kodu
- *  niz dwie linijki.
- *  Mniejsze metody mozna definiwac w ciele klasy.
- */
-
 Wektor Wektor::operator + (Wektor const &wek){
     Wektor wynik;
     for(int i = 0; i < ROZMIAR; i++){
