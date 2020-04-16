@@ -15,7 +15,6 @@
 class Macierz {
   Wektor _kolumna[ROZMIAR];     /*! Pole reprezentujace kolumny macierzy.*/
   TYP wyznacznik = 1;           /*! Pole reprezentujace wyznacznik macierzy, wartosc domyslna to 1.*/
-  
   public:
     /**
     * Konstruktor Macierzy, tworzy macierz na podstawie konstruktora Wektora 
@@ -58,7 +57,15 @@ class Macierz {
      * @return TYP ,wspolczynnik kolumny
      */
          TYP& operator() (int unsigned wi, int unsigned ko)       {return _kolumna[ko](wi);}
-
+    
+    /**
+     * Przeciążenie operatora mnożenia pozwalające na przemnożenie
+     * macierzy przez wektor.
+     * 
+     * @param[in] wek - wektor przez ktory ma zostac przemnozona macierz
+     * @return TYP ,wspolczynnik kolumny
+     */
+    Wektor operator * (const Wektor& wek) const;
     /**
      * Metoda pozwalająca wyliczenie wyznacznika macierzy
      * metoda Gaussa. Program korzysta z kopii macierzy nie wplywajac na jej wyglad,

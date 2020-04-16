@@ -1,5 +1,17 @@
 #include "Macierz.hh"
 
+Wektor Macierz::operator * (const Wektor& wek) const{
+    Wektor tmp;
+    Macierz mac(*this);
+
+    for(int i = 0; i < ROZMIAR; i++){
+        for(int j = 0; j < ROZMIAR; j++){
+            tmp(i) += mac[j](i) * wek(j);
+        }
+    }
+    return tmp;
+}
+
 TYP Macierz::WyznacznikMGaussa(){
     TYP dzielnik;
     wyznacznik = 1;

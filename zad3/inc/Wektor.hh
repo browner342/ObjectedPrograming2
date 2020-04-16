@@ -18,7 +18,8 @@ class Wektor {
    * Konstruktor Wektora, tworzy wektor o wszystkich wspolcznynnikach 0 
    */
   Wektor(){for(TYP& elem : _wsp) elem = 0;}
-
+  
+  Wektor(const Wektor &wek){for(int i = 0; i < ROZMIAR; i++) _wsp[i] = wek._wsp[i];}
   /**
    * Przeciążenie operatora pozwalające na odczytywanie wartosci
    * wspolczynnikow wektora.
@@ -42,7 +43,7 @@ class Wektor {
    * @param[in] Wektor wek - wektor który ma zostać dodany.
    * @return Wektor, suma wektora z danej klasy oraz wektora wczytanego.
    */
-  Wektor operator + (Wektor const &wek);
+  Wektor operator + (Wektor const &wek) const;
 
   /**
    * Przeciążenie operatora odejmowania pozwalające na odejmowanie
@@ -51,7 +52,7 @@ class Wektor {
    * @param[in] Wektor wek - wektor który ma zostać odjety.
    * @return Wektor, róznica wektora z danej klasy oraz wektora wczytanego.
    */
-  Wektor operator - (Wektor const &wek);
+  Wektor operator - (Wektor const &wek) const;
 
   /**
    * Przeciążenie operatora mnożenia pozwalające na mnozenie
@@ -60,7 +61,7 @@ class Wektor {
    * @param[in] Wektor wek - wektor który ma zostać pomnozony.
    * @return TYP, wynikiem iloczynu skalarnego jest liczba.
    */
-  TYP operator * (Wektor const &wek);
+  TYP operator * (Wektor const &wek) const;
 
   /**
    * Przeciazenie operatora mnozenia pozwalajace na mnozenie
@@ -69,7 +70,7 @@ class Wektor {
    * @param[in] TYP mnoznik, przez ktory ma zostac pomnozony wektor.
    * @return Wektor, wynik mnozenia liczby przez wektor.
    */
-  Wektor operator * (TYP const &mnoznik);
+  Wektor operator * (TYP const &mnoznik) const;
 
   /**
    * Przeciazenie operatora dzielenia pozwalajace na dzielenie
@@ -78,7 +79,7 @@ class Wektor {
    * @param[in] TYP dzielnik, przez ktory ma zostac podzielony wektor.
    * @return Wektor, wynik dzielenia liczby przez wektor.
    */
-  Wektor operator / (TYP const &dzielnik);
+  Wektor operator / (TYP const &dzielnik) const;
 };
 
 

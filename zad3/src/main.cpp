@@ -15,6 +15,8 @@ int main()
     return BLAD;
   }
   ukl.obliczCramer();
+  ukl.obliczWektorBledu();
+
   cout<<ukl;
 
   return 0;

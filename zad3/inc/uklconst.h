@@ -3,6 +3,7 @@
 
 #define WYRAZWOLNY 11
 #define ROZWIAZANIE 22
-#define MACIERZ 33
+#define WEKBLEDU 33
+#define MACIERZ 44
 
 #endif

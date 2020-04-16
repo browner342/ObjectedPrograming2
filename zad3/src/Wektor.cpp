@@ -1,41 +1,41 @@
 #include "Wektor.hh"
 
-Wektor Wektor::operator + (Wektor const &wek){
+Wektor Wektor::operator + (Wektor const &wek) const{
     Wektor wynik;
     for(int i = 0; i < ROZMIAR; i++){
-        wynik(i) = this->_wsp[i] + wek(i);
+        wynik(i) = _wsp[i] + wek(i);
     }
     return wynik;
 }
 
-Wektor Wektor::operator - (Wektor const &wek){
+Wektor Wektor::operator - (Wektor const &wek) const{
     Wektor wynik;
     for(int i = 0; i < ROZMIAR; i++){
-        wynik(i) = this->_wsp[i] - wek(i);
+        wynik(i) = _wsp[i] - wek(i);
     }
     return wynik;
 }
 
-TYP Wektor::operator * (Wektor const &wek){
+TYP Wektor::operator * (Wektor const &wek) const{
     TYP wynik;
     for(int i = 0; i < ROZMIAR; i++){
-        wynik += this->_wsp[i] * wek(i);
+        wynik += _wsp[i] * wek(i);
     }
     return wynik;
 }
 
-Wektor Wektor::operator * (TYP const &mnoznik){
+Wektor Wektor::operator * (TYP const &mnoznik) const{
     Wektor wynik;
     for(int i = 0; i < ROZMIAR; i++){
-        wynik(i) = mnoznik * this->_wsp[i];
+        wynik(i) = mnoznik * _wsp[i];
     }
     return wynik;
 }
 
-Wektor Wektor::operator / (TYP const &dzielnik){
+Wektor Wektor::operator / (TYP const &dzielnik) const{
     Wektor wynik;
     for(int i = 0; i < ROZMIAR; i++){
-        wynik(i) = this->_wsp[i] / dzielnik;
+        wynik(i) = _wsp[i] / dzielnik;
     }
     return wynik;
 }

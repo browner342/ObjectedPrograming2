@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cassert>
+#include <cmath>
 #include "Macierz.hh"
 #include "Wektor.hh"
 #include "uklconst.h"
@@ -16,27 +17,29 @@
 class UkladRownanLiniowych {
   Wektor wyrazWolny;    /*! Pole reprezentujace wektor wyrazu wolnego.*/ 
   Wektor rozwiazanie;   /*! Pole reprezentujace wektor rozwiazania.*/ 
-  Macierz macierz;      /*! Pole reprezentujace macierz.*/ 
+  Wektor wekBlad;
+  Macierz macierz;      /*! Pole reprezentujace macierz.*/
 
   public:
+  
   /**
     * Konstruktor Wektor, tworzy macierz , oraz dwa wektory rozwiazania i wyrazu wolnego.
     */
   UkladRownanLiniowych(){macierz = Macierz(); wyrazWolny = Wektor(); rozwiazanie = Wektor();}
-
+  
   /**
    * Przeciążenie operatora pozwalające na czytanie wartosci wektorow wyrazu wolnego i rozwiazania.
    * 
    * @return Wektor
    */
-  const Wektor& operator[] (int unsigned wek) const {return wek == WYRAZWOLNY?wyrazWolny:rozwiazanie;}
+  const Wektor& operator[] (int unsigned wek) const {return wek == WYRAZWOLNY?wyrazWolny: wek == ROZWIAZANIE ? rozwiazanie : wekBlad;}
 
   /**
    * Przeciążenie operatora pozwalające na edycje wartosci wektorow wyrazu wolnego i rozwiazania.
    * 
    * @return Wektor
    */
-        Wektor& operator[] (int unsigned wek)       {return wek == WYRAZWOLNY?wyrazWolny:rozwiazanie;}
+        Wektor& operator[] (int unsigned wek)       {return wek == WYRAZWOLNY?wyrazWolny: wek == ROZWIAZANIE ? rozwiazanie : wekBlad;}
   
   /**
    * Przeciążenie operatora pozwalające na czytanie wartosci macierzy.
@@ -61,6 +64,20 @@ class UkladRownanLiniowych {
    * @return Wektor - jest to wektor rozwiazania.
    */
   Wektor& obliczCramer();
+
+  /**
+   * Metoda oblicza wektor bledu podczas uzywania metody.
+   * 
+   * @return Wektor - jest to wektor bledu.
+   */
+  Wektor& obliczWektorBledu();
+
+  /**
+   * Metoda oblicza dlugosc wektora bledu.
+   * 
+   * @return TYP - dlugosc wektora bledu.
+   */
+  TYP dlWektoraBl() const; 
 
 };
 
