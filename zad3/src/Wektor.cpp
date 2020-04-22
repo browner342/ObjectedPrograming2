@@ -40,6 +40,17 @@ Wektor Wektor::operator / (TYP const &dzielnik) const{
     return wynik;
 }
 
+TYP Wektor::dlugoscWektora(){
+    TYP wynik = 0;
+
+    for(TYP& elem : _wsp){
+        wynik += elem * elem;
+    }
+    wynik = sqrt(wynik);
+
+    return wynik;
+}
+
 /*********************************************************/
 
 std::istream& operator >> (std::istream &strm, Wektor &wek){

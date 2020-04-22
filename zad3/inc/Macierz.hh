@@ -14,7 +14,7 @@
  */
 class Macierz {
   Wektor _kolumna[ROZMIAR];     /*! Pole reprezentujace kolumny macierzy.*/
-  TYP wyznacznik = 1;           /*! Pole reprezentujace wyznacznik macierzy, wartosc domyslna to 1.*/
+  
   public:
     /**
     * Konstruktor Macierzy, tworzy macierz na podstawie konstruktora Wektora 

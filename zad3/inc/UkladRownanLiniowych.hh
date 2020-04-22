@@ -4,7 +4,6 @@
 #include <iostream>
 #include <iomanip>
 #include <cassert>
-#include <cmath>
 #include "Macierz.hh"
 #include "Wektor.hh"
 #include "uklconst.h"
@@ -16,8 +15,7 @@
  */
 class UkladRownanLiniowych {
   Wektor wyrazWolny;    /*! Pole reprezentujace wektor wyrazu wolnego.*/ 
-  Wektor rozwiazanie;   /*! Pole reprezentujace wektor rozwiazania.*/ 
-  Wektor wekBlad;
+  Wektor rozwiazanie;   /*! out Pole reprezentujace wektor rozwiazania.*/ 
   Macierz macierz;      /*! Pole reprezentujace macierz.*/
 
   public:
@@ -32,14 +30,14 @@ class UkladRownanLiniowych {
    * 
    * @return Wektor
    */
-  const Wektor& operator[] (int unsigned wek) const {return wek == WYRAZWOLNY?wyrazWolny: wek == ROZWIAZANIE ? rozwiazanie : wekBlad;}
+  const Wektor& operator[] (int unsigned wek) const {return wek == WYRAZWOLNY?wyrazWolny : rozwiazanie;}
 
   /**
    * Przeciążenie operatora pozwalające na edycje wartosci wektorow wyrazu wolnego i rozwiazania.
    * 
    * @return Wektor
    */
-        Wektor& operator[] (int unsigned wek)       {return wek == WYRAZWOLNY?wyrazWolny: wek == ROZWIAZANIE ? rozwiazanie : wekBlad;}
+        Wektor& operator[] (int unsigned wek)       {return wek == WYRAZWOLNY?wyrazWolny : rozwiazanie;}
   
   /**
    * Przeciążenie operatora pozwalające na czytanie wartosci macierzy.
@@ -70,15 +68,7 @@ class UkladRownanLiniowych {
    * 
    * @return Wektor - jest to wektor bledu.
    */
-  Wektor& obliczWektorBledu();
-
-  /**
-   * Metoda oblicza dlugosc wektora bledu.
-   * 
-   * @return TYP - dlugosc wektora bledu.
-   */
-  TYP dlWektoraBl() const; 
-
+  Wektor obliczWektorBledu();
 };
 
 /**

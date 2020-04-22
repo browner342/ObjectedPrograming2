@@ -14,15 +14,15 @@ Wektor Macierz::operator * (const Wektor& wek) const{
 
 TYP Macierz::WyznacznikMGaussa(){
     TYP dzielnik;
-    wyznacznik = 1;
+    TYP wyznacznik = 1;
     Macierz tmp(*this);
+
     for(int i = 0; i < ROZMIAR - 1; i++){
         for(int j = i + 1; j < ROZMIAR; j++){
             if(tmp[i](i) != 0){
                 dzielnik = tmp[j](i) / tmp[i](i);
                 tmp[j] = tmp[j] - tmp[i] * dzielnik;
             }
-            
         }
     }
     for(int i = 0; i < ROZMIAR; i++) wyznacznik *= tmp[i](i);

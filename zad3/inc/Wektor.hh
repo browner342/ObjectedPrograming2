@@ -4,12 +4,14 @@
 #include "rozmiar.h"
 #include "typ.h"
 #include <iostream>
+#include <cmath>
 
 
 /**
  * Plik zawiera definicje klasy Wektor, metod tej klasy,
  * oraz przeciazenia operatorow, rowniez dotyczacych wektora. 
  */
+//dopisac oblicznie dlugosci wektora
 class Wektor {
   TYP _wsp[ROZMIAR];    /*! Pole reprezentuje tablice wspolczynnikow wektora*/
 
@@ -80,6 +82,13 @@ class Wektor {
    * @return Wektor, wynik dzielenia liczby przez wektor.
    */
   Wektor operator / (TYP const &dzielnik) const;
+
+   /**
+   * Metoda oblicza dlugosc wektora bledu.
+   * 
+   * @return TYP - dlugosc wektora bledu.
+   */
+  TYP dlugoscWektora();
 };
 
 
