@@ -1,24 +1,17 @@
-#
-#  To sa opcje dla kompilacji
-#
-CPPFLAGS= -c -g -Iinc -Wall -pedantic
+CXXFLAGS= -c -g -std=c++11 -iquote inc -Wall -pedantic
 
-uklad_rownan: obj/main.o obj/UkladRownanLiniowych.o obj/Macierz.o obj/Wektor.o
-	g++ -Wall -pedantic -o uklad_rownan obj/main.o obj/Wektor.o\
-                                   obj/Macierz.o obj/UkladRownanLiniowych.o
+__start__: ./test_wektora
+	./test_wektora
 
-obj/main.o: src/main.cpp inc/UkladRownanLiniowych.hh inc/Macierz.hh inc/Wektor.hh\
-        inc/rozmiar.h inc/typ.h inc/uklconst.h inc/blad.h
-	g++ ${CPPFLAGS} -o obj/main.o src/main.cpp
+obj:
+	mkdir -p obj
 
-obj/UkladRownanLiniowych.o: src/UkladRownanLiniowych.cpp inc/UkladRownanLiniowych.hh
-	g++ ${CPPFLAGS} -o obj/UkladRownanLiniowych.o src/UkladRownanLiniowych.cpp
+./test_wektora: obj obj/main.o obj/lzespolona.o
+	g++ -o ./test_wektora obj/main.o obj/lzespolona.o
 
-obj/Macierz.o: src/Macierz.cpp inc/Macierz.hh inc/Wektor.hh
-	g++ ${CPPFLAGS} -o obj/Macierz.o src/Macierz.cpp
+obj/main.o: src/main.cpp inc/macierz.hh inc/lzespolona.hh
+	g++ -c ${CXXFLAGS} -o obj/main.o src/main.cpp
 
-obj/Wektor.o: src/Wektor.cpp inc/Wektor.hh inc/rozmiar.h inc/typ.h
-	g++ ${CPPFLAGS} -o obj/Wektor.o src/Wektor.cpp
 
-clean:
-	rm -f obj/*.o uklad_rownan
+obj/lzespolona.o: src/lzespolona.cpp inc/lzespolona.hh
+	g++ -c ${CXXFLAGS} -o obj/lzespolona.o src/lzespolona.cpp
