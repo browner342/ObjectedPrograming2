@@ -16,7 +16,6 @@
 template <typename STyp, int SWymiar>
 class UkladRownanLiniowych {
   Wektor<STyp,SWymiar> wyrazWolny;    /*! Pole reprezentujace wektor wyrazu wolnego.*/ 
-  Wektor<STyp,SWymiar> rozwiazanie;   /*! out Pole reprezentujace wektor rozwiazania.*/ 
   Macierz<STyp,SWymiar> macierz;      /*! Pole reprezentujace macierz.*/
 
   public:
@@ -24,21 +23,21 @@ class UkladRownanLiniowych {
   /**
     * Konstruktor Wektor, tworzy macierz , oraz dwa wektory rozwiazania i wyrazu wolnego.
     */
-  UkladRownanLiniowych(){macierz = Macierz<STyp,SWymiar>(); wyrazWolny = Wektor<STyp,SWymiar>(); rozwiazanie = Wektor<STyp,SWymiar>();}
+  UkladRownanLiniowych(){macierz = Macierz<STyp,SWymiar>(); wyrazWolny = Wektor<STyp,SWymiar>();}
   
   /**
    * Przeciążenie operatora pozwalające na czytanie wartosci wektorow wyrazu wolnego i rozwiazania.
    * 
    * @return Wektor
    */
-  const Wektor<STyp,SWymiar>& operator[] (int unsigned wek) const {return wek == WYRAZWOLNY?wyrazWolny : rozwiazanie;}
+  const Wektor<STyp,SWymiar>& operator[] (int unsigned wek) const {return wyrazWolny;}
 
   /**
    * Przeciążenie operatora pozwalające na edycje wartosci wektorow wyrazu wolnego i rozwiazania.
    * 
    * @return Wektor
    */
-        Wektor<STyp,SWymiar>& operator[] (int unsigned wek)       {return wek == WYRAZWOLNY?wyrazWolny : rozwiazanie;}
+        Wektor<STyp,SWymiar>& operator[] (int unsigned wek)       {return wyrazWolny;}
   
   /**
    * Przeciążenie operatora pozwalające na czytanie wartosci macierzy.
@@ -62,20 +61,23 @@ class UkladRownanLiniowych {
    * 
    * @return Wektor - jest to wektor rozwiazania.
    */
-  Wektor<STyp,SWymiar>& obliczCramer(){  
+  Wektor<STyp,SWymiar> obliczCramer()const{  
     Macierz<STyp,SWymiar> tmp[SWymiar];
-    STyp wyznacznik = macierz.WyznacznikMGaussa();
+    Macierz<STyp,SWymiar> mac(macierz);
+    Wektor<STyp, SWymiar> wynik;
+    Wektor<STyp, SWymiar> wolny(wyrazWolny);
+    STyp wyznacznik = mac.WyznacznikMGaussa();
 
     assert(wyznacznik != 0);
 
     for(int i = 0; i < SWymiar; i++){//tworzy kopie macierzy po czym oblicza na nich wyznaczniki zgodnie z metoda Cramera
-        tmp[i] = macierz;
-        tmp[i].ZamianaKolumnyNaWektor(i, wyrazWolny);
-        rozwiazanie(i) = tmp[i].WyznacznikMGaussa() / wyznacznik;
+        tmp[i] = mac;
+        tmp[i].ZamianaKolumnyNaWektor(i, wolny);
+        wynik(i) = tmp[i].WyznacznikMGaussa() / wyznacznik;
 
     }
 
-    return rozwiazanie;
+    return wynik;
 }
 
   /**
@@ -83,21 +85,15 @@ class UkladRownanLiniowych {
    * 
    * @return Wektor - jest to wektor bledu.
    */
-  Wektor<STyp,SWymiar> obliczWektorBledu(){
+  Wektor<STyp,SWymiar> obliczWektorBledu(Wektor<STyp,SWymiar> roz)const{
     Wektor<STyp,SWymiar> wekBlad;
     Macierz<STyp,SWymiar> mac(macierz);
-    Wektor<STyp,SWymiar> roz(rozwiazanie);
+    //Wektor<STyp,SWymiar> roz(rozwiazanie);
     wekBlad = mac * roz - wyrazWolny;
 
     return wekBlad;
   }
-};/*
-template<typename STyp,
-std::enable_if<std::is_<STyp>::value>, int SWymiar>
-void dod(UkladRownanLiniowych<STyp,SWymiar> &t){
-  std::cout<<"lol";
-}*/
-
+};
 
 /**
  * Pozwala operatorowi przesuniecia bitowego w lewo wczytywac Uklad rownan.
@@ -144,6 +140,12 @@ std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,
  */
 template <typename STyp, int SWymiar>
 std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,SWymiar> &uklRown){
+  Wektor<STyp, SWymiar> wek; 
+  Wektor<STyp, SWymiar> rozwiazanie;
+
+  rozwiazanie = uklRown.obliczCramer();
+  wek = uklRown.obliczWektorBledu(rozwiazanie);
+
   strm << "Macierz A^T:" << std::endl;
   strm << uklRown(MACIERZ) << std::endl;
   strm<< "Wektor wyrazow wolnych b:"<<std::endl;
@@ -151,7 +153,11 @@ std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,
   strm << "Rozwiazanie:";
   for(int i = 0; i < SWymiar; i++){strm<<" x"<<i+1;}
   strm << std::endl;
-  strm << std::setprecision(3) << uklRown[ROZWIAZANIE] << std::endl; 
+  strm << std::setprecision(3) << rozwiazanie << std::endl<<std::endl;
+
+  
+  strm << "Wektor bledu: Ax-b = ("<< wek <<")" << std::endl;
+  strm << "Dlugosc wektora bledu: "<<wek.dlugoscWektora() << std::endl;
   return strm;
 }
 

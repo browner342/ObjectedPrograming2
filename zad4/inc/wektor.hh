@@ -1,7 +1,7 @@
 #ifndef WEKTOR_HH
 #define WEKTOR_HH
 
-
+#include "lzespolona.hh"
 #include <iostream>
 #include <math.h>
 
@@ -24,7 +24,23 @@ class Wektor {
      * @return Wektor, suma wektora z danej klasy oraz wektora wczytanego.
      */
     Wektor<STyp,SWymiar> operator + (const Wektor<STyp,SWymiar> &wek) const;
+
+    /**
+     * Przeciążenie operatora odejmowania pozwalające na odejmowanie
+     * od siebie dwóch wektorów.
+     * 
+     * @param[in] Wektor wek - wektor odejmujacy.
+     * @return Wektor, roznica wektora z danej klasy oraz wektora wczytanego.
+     */
     Wektor<STyp,SWymiar> operator - (const Wektor<STyp,SWymiar> &odjemnik) const;
+     
+     /**
+     * Przeciążenie operatora mnożenia pozwalające na mnozenie
+     * wektora przez liczbe.
+     * 
+     * @param[in] mnoznik- liczba przez ktora ma zostac pomnozony wektor
+     * @return wektor
+     */
     Wektor<STyp,SWymiar> operator * (STyp mnoznik) const;
 
       /**
@@ -46,11 +62,42 @@ class Wektor {
     Wektor<STyp,SWymiar> operator / (STyp const &dzielnik) const;
 
     /**
-     * Metoda oblicza dlugosc wektora bledu.
+     * Metoda oblicza dlugosc wektora bledu dla double.
      * 
      * @return TYP - dlugosc wektora bledu.
      */
-    STyp dlugoscWektora();
+    template <typename TMP = STyp>
+    typename std::enable_if<std::is_same<TMP, double>::value, double>::type
+    dlugoscWektora(){
+      STyp wynik;
+      wynik = 0;
+
+      for(STyp& elem : _wsp){wynik =wynik + elem * elem;}
+      wynik = sqrt(wynik);
+
+      return wynik;
+    }
+
+    /**
+     * Metoda oblicza dlugosc wektora bledu dla liczb zespolonych.
+     * 
+     * @return TYP - dlugosc wektora bledu.
+     */
+    template <typename TMP = STyp>
+    typename std::enable_if<std::is_same<TMP, LZespolona>::value, double>::type
+    dlugoscWektora(){
+      STyp tmp;
+      double wynik = 0;
+      tmp = 0;
+
+      for(STyp& elem : _wsp){
+        tmp = tmp + elem * elem;
+        wynik += tmp.re;
+      }
+      wynik = sqrt(wynik);
+
+      return wynik;
+    }
 };
 
 template <typename STyp, int SWymiar>
@@ -103,19 +150,15 @@ Wektor<STyp,SWymiar> Wektor<STyp,SWymiar>::operator / (STyp const &dzielnik) con
     return wynik;
 }
 
-template <typename STyp, int SWymiar>
-STyp Wektor<STyp,SWymiar>:: dlugoscWektora(){
-    STyp wynik;
-    wynik = 0;
-
-    for(STyp& elem : _wsp){
-        wynik =wynik + elem * elem;
-    }
-    wynik = sqrt(wynik);
-
-    return wynik;
-}
-
+/**
+ * Pozwala operatorowi przesuniecia bitowego w lewo wczytywac Wektor.
+ * Akcjeptuje jedynie format zgodny z TYP, jak również cyfry wczytywane należy
+ * odzielać spacją. W przypadku niepoprawności zwraca bład/
+ * 
+ * @param[in] strm - strumien wczytywania
+ * @param[in] wek - wektor
+ * @return Strumien do wczytania
+ */
 template <typename STyp, int SWymiar>
 std::istream& operator >> (std::istream &strm, Wektor<STyp,SWymiar>& wek){
     STyp tmp[SWymiar];
@@ -128,6 +171,13 @@ std::istream& operator >> (std::istream &strm, Wektor<STyp,SWymiar>& wek){
     return strm;
 }
 
+/**
+ * Pozwala operatorowi przesuniecia bitowego w prawo wypisac wektor.
+ * 
+ * @param[in] strm - strumien wypisania
+ * @param[in] wek - wektor
+ * @return Strumien do wypisania
+ */
 template <typename STyp, int SWymiar>
 std::ostream& operator << (std::ostream &strm, const Wektor<STyp,SWymiar>& W)
 {

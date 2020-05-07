@@ -17,6 +17,8 @@ struct  LZespolona {
   double   re;    /*! Pole repezentuje czesc rzeczywista. */
   double   im;    /*! Pole repezentuje czesc urojona. */
 
+  
+
   LZespolona(){re = 0; im = 0;}
   LZespolona(double r, double i){re = r; im = i;}
 
@@ -69,9 +71,22 @@ LZespolona operator / (LZespolona Z2) const;
 
   
 };
-
+/**
+ * Mnozu liczbe zespolona przez liczbe zmiennoprzecinkowa
+ * 
+ * @param[in] liczba - mnoznik
+ * @param[in] Z - liczba lezspolona mnozona
+ * @return bool, true jesli sa rowne, jesli nie false  
+ */
 LZespolona  operator * (float liczba, LZespolona  &Z);
 
+/**
+ * Mnozu liczbe zespolona przez liczbe zmiennoprzecinkowa
+ * 
+ * @param[in] Z - liczba lezspolona mnozona
+ * @param[in] liczba - mnoznik
+ * @return bool, true jesli sa rowne, jesli nie false  
+ */
 LZespolona  operator * (LZespolona  &Z, float liczba);
 
 /**
