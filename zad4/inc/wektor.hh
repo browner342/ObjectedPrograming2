@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <math.h>
 
 
 
@@ -103,11 +104,12 @@ Wektor<STyp,SWymiar> Wektor<STyp,SWymiar>::operator / (STyp const &dzielnik) con
 }
 
 template <typename STyp, int SWymiar>
-STyp Wektor<STyp,SWymiar>::dlugoscWektora(){
-    STyp wynik = 0;
+STyp Wektor<STyp,SWymiar>:: dlugoscWektora(){
+    STyp wynik;
+    wynik = 0;
 
     for(STyp& elem : _wsp){
-        wynik += elem * elem;
+        wynik =wynik + elem * elem;
     }
     wynik = sqrt(wynik);
 

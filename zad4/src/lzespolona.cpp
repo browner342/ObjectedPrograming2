@@ -12,7 +12,7 @@
  *    Sume dwoch skladnikow przekazanych jako parametry.
  */
 bool LZespolona::operator != (double Liczba){
-    if(re != Liczba && im != Liczba){return true;}
+    if(re != Liczba || im != Liczba){return true;}
     return false;
 }
 LZespolona &LZespolona::operator = (double  Liczba)
@@ -28,6 +28,7 @@ LZespolona LZespolona::operator + (LZespolona  Z2) const{
 
 LZespolona LZespolona::operator - (LZespolona  Z2) const{
   Z2.re = this->re - Z2.re; Z2.im = this->im - Z2.im;
+  //if(Z2.re < 0.0001){Z2.re = 0;} if(Z2.im < 0.0001) {Z2.im = 0;}
   return Z2;
 }
 
@@ -93,14 +94,16 @@ std::ostream& operator<<(std::ostream& StrmWy, const LZespolona& Lz){
 }
 
 std::istream& operator>>(std::istream& StrmWe, LZespolona& Lz){
-    char znak1, znak2, znak3;
-    StrmWe>>znak1;
-    if(znak1 != '('){return StrmWe;}
-    StrmWe>>Lz.re;
-    if(StrmWe.fail()){return StrmWe;}
-    StrmWe>>Lz.im;
-    StrmWe>>znak2;
-    StrmWe>>znak3;
-    //StrmWe.ignore();
-    return StrmWe;
+  char znak;
+
+    StrmWe >> znak;
+  if(znak!='(')
+    StrmWe.setstate(std::ios::failbit);
+  StrmWe >> Lz.re >> Lz.im >> znak;
+  if(znak!='i')
+    StrmWe.setstate(std::ios::failbit);
+  StrmWe>>znak;
+  if(znak!=')')
+    StrmWe.setstate(std::ios::failbit);
+  return StrmWe;
 }

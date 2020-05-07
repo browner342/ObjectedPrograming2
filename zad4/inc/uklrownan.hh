@@ -91,7 +91,13 @@ class UkladRownanLiniowych {
 
     return wekBlad;
   }
-};
+};/*
+template<typename STyp,
+std::enable_if<std::is_<STyp>::value>, int SWymiar>
+void dod(UkladRownanLiniowych<STyp,SWymiar> &t){
+  std::cout<<"lol";
+}*/
+
 
 /**
  * Pozwala operatorowi przesuniecia bitowego w lewo wczytywac Uklad rownan.
@@ -105,19 +111,14 @@ class UkladRownanLiniowych {
  */
 template <typename STyp, int SWymiar>
 std::istream& operator >> (std::istream &strm, UkladRownanLiniowych<STyp,SWymiar> &uklRown){
-    strm >> uklRown(MACIERZ);
-    if(strm.fail()){return strm;}
-    strm >> uklRown[WYRAZWOLNY];
-    return strm;
+  strm >> uklRown(MACIERZ);
+  if(strm.fail()){return strm;}
+  strm >> uklRown[WYRAZWOLNY];
+  return strm;
 }
 
-/**
- * Pozwala operatorowi przesuniecia bitowego w prawo wypisac uklad rownan.
- * 
- * @param[in] strm - strumien wypisania
- * @param[in] uklRown - uklad rownan do wypisania
- * @return Strumien do wypisania
- */
+
+/*
 template <typename STyp, int SWymiar>
 std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,SWymiar> &uklRown){
     for(int wi = 0; wi < SWymiar; wi++){
@@ -133,6 +134,25 @@ std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,
     }
  
     return strm;
+}*/
+/**
+ * Pozwala operatorowi przesuniecia bitowego w prawo wypisac uklad rownan.
+ * 
+ * @param[in] strm - strumien wypisania
+ * @param[in] uklRown - uklad rownan do wypisania
+ * @return Strumien do wypisania
+ */
+template <typename STyp, int SWymiar>
+std::ostream& operator << ( std::ostream &strm, const UkladRownanLiniowych<STyp,SWymiar> &uklRown){
+  strm << "Macierz A^T:" << std::endl;
+  strm << uklRown(MACIERZ) << std::endl;
+  strm<< "Wektor wyrazow wolnych b:"<<std::endl;
+  strm << uklRown[WYRAZWOLNY] << std::endl << std::endl;
+  strm << "Rozwiazanie:";
+  for(int i = 0; i < SWymiar; i++){strm<<" x"<<i+1;}
+  strm << std::endl;
+  strm << std::setprecision(3) << uklRown[ROZWIAZANIE] << std::endl; 
+  return strm;
 }
 
 

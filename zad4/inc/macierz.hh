@@ -91,7 +91,7 @@ Wektor<STyp,SWymiar> Macierz<STyp,SWymiar>::operator * (const Wektor<STyp,SWymia
 
     for(int i = 0; i < SWymiar; i++){
         for(int j = 0; j < SWymiar; j++){
-            tmp(i) += mac[j](i) * wek(j);
+            tmp(i) = tmp(i) + mac[j](i) * wek(j);
         }
     }
     return tmp;
@@ -110,6 +110,7 @@ STyp Macierz<STyp,SWymiar>::WyznacznikMGaussa(){
                 tmp[j] = tmp[j] - tmp[i] * dzielnik;
             }
         }
+        //std::cout<<tmp<<std::endl;
     }
     wyznacznik = tmp[0](0);
     for(int i = 1; i < SWymiar; i++) wyznacznik = wyznacznik * tmp[i](i);
