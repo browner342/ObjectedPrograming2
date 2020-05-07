@@ -110,7 +110,6 @@ STyp Macierz<STyp,SWymiar>::WyznacznikMGaussa(){
                 tmp[j] = tmp[j] - tmp[i] * dzielnik;
             }
         }
-        //std::cout<<tmp<<std::endl;
     }
     wyznacznik = tmp[0](0);
     for(int i = 1; i < SWymiar; i++) wyznacznik = wyznacznik * tmp[i](i);

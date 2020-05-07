@@ -91,13 +91,7 @@ class UkladRownanLiniowych {
 
     return wekBlad;
   }
-};/*
-template<typename STyp,
-std::enable_if<std::is_<STyp>::value>, int SWymiar>
-void dod(UkladRownanLiniowych<STyp,SWymiar> &t){
-  std::cout<<"lol";
-}*/
-
+};
 
 /**
  * Pozwala operatorowi przesuniecia bitowego w lewo wczytywac Uklad rownan.
