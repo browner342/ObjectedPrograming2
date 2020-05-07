@@ -1,7 +1,7 @@
 //#include "wektor.hh"
 #include "macierz.hh"
 #include "rozmiar.h"
-#include "lzespolona.hh"
+#include "lzesp.hh"
 
 using namespace std;
 

@@ -6,12 +6,12 @@ __start__: ./test_wektora
 obj:
 	mkdir -p obj
 
-./test_wektora: obj obj/main.o obj/lzespolona.o
-	g++ -o ./test_wektora obj/main.o obj/lzespolona.o
+./test_wektora: obj obj/main.o obj/lzesp.o
+	g++ -o ./test_wektora obj/main.o obj/lzesp.o
 
-obj/main.o: src/main.cpp inc/macierz.hh inc/lzespolona.hh
+obj/main.o: src/main.cpp inc/macierz.hh inc/lzesp.hh
 	g++ -c ${CXXFLAGS} -o obj/main.o src/main.cpp
 
 
-obj/lzespolona.o: src/lzespolona.cpp inc/lzespolona.hh
-	g++ -c ${CXXFLAGS} -o obj/lzespolona.o src/lzespolona.cpp
+obj/lzesp.o: src/lzesp.cpp inc/lzesp.hh
+	g++ -c ${CXXFLAGS} -o obj/lzesp

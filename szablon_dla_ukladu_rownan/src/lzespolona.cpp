@@ -1,4 +1,4 @@
-#include "lzespolona.hh"
+#include "lzesp.hh"
 #include <iomanip>
 
 using namespace std;

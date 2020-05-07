@@ -3,6 +3,7 @@
 Wektor& UkladRownanLiniowych::obliczCramer(){  
     Macierz tmp[ROZMIAR];
     TYP wyznacznik = macierz.WyznacznikMGaussa();
+    std::cout<<wyznacznik<<std::endl;
 
     assert(wyznacznik != 0);
 
