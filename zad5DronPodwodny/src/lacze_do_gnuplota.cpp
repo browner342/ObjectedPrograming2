@@ -355,6 +355,7 @@ namespace PzG {
   string Komenda = "/usr/bin/echo \"";
   Komenda += Polecenie;
   Komenda += "\" | gnuplot&";
+  std::cout<<Polecenie.c_str();
 
   return PrzeslijDoGNUPlota(Polecenie.c_str());
  }
