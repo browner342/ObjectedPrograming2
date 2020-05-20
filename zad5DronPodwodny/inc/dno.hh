@@ -2,13 +2,10 @@
 #define DNO_HH
 #include <vector>
 #include <consts.h>
-#include <wektor3D.hh>
+#include "wektor3D.hh"
+#include "powierzchnia.hh"
 
-class Dno{
-    /**
-    * Trzyma wartosci punktow siatki dna
-    */
-    std::string _napis = "";
+class Dno:public Powierzchnia{
 public:
     /**
     * Tworzy powierzchnie dna na zakresie od poczatek do koniec
@@ -22,8 +19,6 @@ public:
     * Destruktor dna
     */
     ~Dno(){}
-
-    std::string napis() const {return _napis;}
 };
 
 #endif

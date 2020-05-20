@@ -1,14 +1,9 @@
 #ifndef WODA_HH
 #define WODA_HH
-#include <vector>
-#include <consts.h>
-#include <wektor3D.hh>
 
-class Woda{
-    /**
-    * Trzyma wartosci punktow siatki wody
-    */
-    std::string _napis = "";
+#include "powierzchnia.hh"
+
+class Woda : public Powierzchnia{
 public:
     /**
     * Tworzy powierzchnie wody na zakresie od poczatek do koniec
@@ -22,8 +17,6 @@ public:
     * Destruktor wody
     */
     ~Woda(){}
-
-    std::string napis() const {return _napis;}
 };
 
 #endif

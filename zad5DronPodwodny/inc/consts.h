@@ -8,4 +8,7 @@
 #define WODA_MIN 0
 #define ROZMIAR_WEK 3
 
+#define PROSTOPADLOSCIAN "bryly/prostopadloscian.dat"
+#define DNOIWODA "bryly/powierzchnie.dat"
+
 #endif
