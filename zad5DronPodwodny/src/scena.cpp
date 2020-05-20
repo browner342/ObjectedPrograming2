@@ -7,22 +7,11 @@ bool Scena::generujSceneDoPliku(const char *nazwaPliku){
     std::ofstream Strm(nazwaPliku);
     if (Strm.fail()) return false;
 
-    int tmp = int(zakresK(0)) / KROK_SIATKI;
-    for( int i = 0; i < w.ilosc(); i++ ){
-        if(i % tmp == 0){
-            Strm<<std::endl;
-        }
+    _napis += w.napis();
+    _napis += "#\n\n";
+    _napis += d.napis();
 
-        Strm<<w[i]<<std::endl;
-    }Strm<<"#"<<std::endl<<std::endl;
+    Strm<<_napis;
 
-    for( int i = 0; i < d.ilosc(); i++ ){
-        if(i % tmp == 0){
-            Strm<<std::endl;
-        }
-        
-        Strm<<d[i]<<std::endl;
-    }Strm<<"#"<<std::endl<<std::endl;
-    
     return true;
 }

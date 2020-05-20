@@ -6,5 +6,6 @@
 #define KROK_SIATKI 5
 #define WODA_MAX 1
 #define WODA_MIN 0
+#define ROZMIAR_WEK 3
 
 #endif

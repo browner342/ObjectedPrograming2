@@ -15,9 +15,12 @@ public:
     int ileTeraz()     const {return iloscWszystkie - iloscZniszczone;}
 
     Wektor3D() : Wektor<double, 3>() {iloscWszystkie++;}
+    Wektor3D(const Wektor3D &w){(*this) = w; iloscWszystkie++;}
     Wektor3D(double x, double y, double z) : Wektor<double, 3>() {(*this)(0)= x; (*this)(1)= y; (*this)(2)= z; iloscWszystkie++;}
     Wektor3D(const Wektor<double, 3> &m) : Wektor<double, 3>(m) {iloscWszystkie++;}
     ~Wektor3D(){iloscZniszczone++;}
+
+    std::string napis() const;
 };
 
 

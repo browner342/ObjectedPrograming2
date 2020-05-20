@@ -6,6 +6,7 @@
 #include "macierz.hh"
 #include "scena.hh"
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -13,33 +14,27 @@ using namespace std;
 int main()
 {
   PzG::LaczeDoGNUPlota  Lacze;
-  Wektor3D wek[4];
-  fstream plik;
+  Wektor3D wektorP = Wektor3D(0, 0, 0);
+  Wektor3D wektorK = Wektor3D(70, 70, 70);
   char c;
-  /*
-  plik.open("bryly/test.dat", ios::out);
-  for(Wektor3D& elem:wek){
-    cin>>elem;
-    if(!cin.fail()){plik << elem << endl;}
-  }
-  plik.close();*/ 
-  cin>>wek[0];
-  cin>>wek[1];
-  Scena scena = Scena(wek[0], wek[1]);
-  scena.generujSceneDoPliku("bryly/test.dat");
+
+  Scena *scena = new Scena(wektorP, wektorK);
+  scena->generujSceneDoPliku("bryly/test.dat");
+  
   
   Lacze.DodajNazwePliku("bryly/test.dat");
   Lacze.ZmienTrybRys(PzG::TR_3D);
   Lacze.Inicjalizuj();  // Tutaj startuje gnuplot.
-
-  Lacze.UstawZakresX(0, 100);
-  Lacze.UstawZakresY(0, 90);
+  
+  Lacze.UstawZakresX(wektorP(0), wektorK(0));
+  Lacze.UstawZakresY(wektorP(1), wektorK(1));
   Lacze.UstawZakresZ(-90, 10);
 
   Lacze.UstawRotacjeXZ(40,60); // Tutaj ustawiany jest widok
   Lacze.Rysuj();        // Teraz powinno pojawic sie okienko gnuplota
                         // z rysunkiem, o ile istnieje plik "prostopadloscian1.dat"
   
-  cin >> noskipws >> c;
+
+  delete scena;
   cin >> noskipws >> c;
 }

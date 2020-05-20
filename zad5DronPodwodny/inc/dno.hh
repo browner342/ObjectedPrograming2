@@ -5,13 +5,25 @@
 #include <wektor3D.hh>
 
 class Dno{
-    std::vector <Wektor3D> wartosci; 
+    /**
+    * Trzyma wartosci punktow siatki dna
+    */
+    std::string _napis = "";
 public:
-    Dno(){}
+    /**
+    * Tworzy powierzchnie dna na zakresie od poczatek do koniec
+    * 
+    * @param[in] poczatek - wektorowy poczatek zakresu
+    * @param[in] koniec - wektorowy koniec zakresu 
+    */
     Dno(Wektor3D poczatek, Wektor3D koniec);
 
-    int ilosc(){return wartosci.size();}
-    Wektor3D  operator [] (unsigned int i) const { return wartosci[i]; }
+    /**
+    * Destruktor dna
+    */
+    ~Dno(){}
+
+    std::string napis() const {return _napis;}
 };
 
 #endif

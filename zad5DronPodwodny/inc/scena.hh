@@ -1,24 +1,43 @@
 #ifndef SCENA_HH
 #define SCENA_HH
-#include <wektor3D.hh>
 #include <woda.hh>
 #include <dno.hh>
-#include <consts.h>
 #include <string>
 #include <fstream>
 #include <cstdlib>
 
 class Scena{
+    /**
+    * Trzyma wartosci zakresu poczatkowego sceny
+    */
     Wektor3D zakresP;
+    /**
+    * Trzyma wartosci zakresu koncowego sceny
+    */
     Wektor3D zakresK;
-public:
-    Wektor3D zakresy() {std::cout<<zakresP<<std::endl<<zakresK; return zakresK;}
-    
-    Scena(){zakresP = Wektor3D(); zakresK = Wektor3D();}
-    Scena(Wektor3D poczatek, Wektor3D koniec) : Scena(){zakresP = poczatek; zakresK = koniec;}
-    
-    bool generujSceneDoPliku(const char *nazwaPliku);
 
+    std::string _napis = "";
+public:
+    /**
+    * Konstruktor Sceny, tworzy scene o zakresach od zakresP do zakresZ,
+    * ktore sa danymi punktami
+    * 
+    * @param[in] poczatek - wektorowy poczatek zakresu
+    * @param[in] koniec - wektorowy koniec zakresu 
+    */
+    Scena(Wektor3D poczatek, Wektor3D koniec){zakresP = poczatek; zakresK = koniec;}
+    
+    /**
+    * Destruktor sceny
+    */
+    ~Scena(){}
+
+    /**
+    * Funkcja generujuje wartosci dna oraz wody, po czym zwraca je do pliku
+    * 
+    * @param[in] nazwaPliku
+    */
+    bool generujSceneDoPliku(const char *nazwaPliku);
 };
 
 #endif

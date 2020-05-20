@@ -5,13 +5,25 @@
 #include <wektor3D.hh>
 
 class Woda{
-    std::vector <Wektor3D> wartosci; 
+    /**
+    * Trzyma wartosci punktow siatki wody
+    */
+    std::string _napis = "";
 public:
-    Woda(){}
-    Woda(Wektor3D poczatek, Wektor3D koniec);
+    /**
+    * Tworzy powierzchnie wody na zakresie od poczatek do koniec
+    * 
+    * @param[in] poczatek - wektorowy poczatek zakresu
+    * @param[in] koniec - wektorowy koniec zakresu 
+    */
+    Woda(Wektor3D& poczatek, Wektor3D& koniec);
 
-    int ilosc(){return wartosci.size();}
-    Wektor3D  operator [] (unsigned int i) const { return wartosci[i]; }
+    /**
+    * Destruktor wody
+    */
+    ~Woda(){}
+
+    std::string napis() const {return _napis;}
 };
 
 #endif
