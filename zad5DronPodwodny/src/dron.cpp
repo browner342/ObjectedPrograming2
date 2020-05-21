@@ -27,7 +27,9 @@ void Dron::obrotWokolOZ(const double& kat){
     //wraca do poczatkowego ukladu wspolzednych
     (*this).powrotDoUkladuLok();
     for(Wektor3D& elem : _ukladGlobalny){
-        elem = macierzZmian * elem + wektorPrzesunieciaUkladu;
+        elem = macierzZmian * elem;
+        elem = elem + wektorPrzesunieciaUkladu;
+        std::cout<<wektorPrzesunieciaUkladu<<std::endl<<std::endl;
     }
 }
 
@@ -35,16 +37,67 @@ void Dron::ruchNaWprost(const double& katGoraDol, const double& odleglosc){
     double katPoziomRAD = katZmianyUkladu * M_PI / 180;
     double katPionRAD = katGoraDol * M_PI / 180;
 
-    wektorPrzesunieciaUkladu = Wektor3D(odleglosc*cos(katPoziomRAD), odleglosc*(-sin(katPoziomRAD)), odleglosc*sin(katPionRAD));
-    std::cout<<wektorPrzesunieciaUkladu;
+    Wektor3D tmp = Wektor3D(odleglosc*(-sin(katPoziomRAD)), odleglosc*cos(katPoziomRAD), odleglosc*sin(katPionRAD));
+    wektorPrzesunieciaUkladu = wektorPrzesunieciaUkladu + tmp;
+    std::cout<<wektorPrzesunieciaUkladu<<std::endl;
 
     for(Wektor3D& elem : _ukladGlobalny){
-        elem = elem + wektorPrzesunieciaUkladu;
+        elem = elem + tmp;
     }
 }
 
+bool Dron::wykrywanieKolizjiZDnem(){
+    double poziomDrona = POZ_WODY + 1; 
+
+    for(Wektor3D& elem : _ukladGlobalny){
+        elem(2) < poziomDrona?poziomDrona = elem(2):0;
+    }
+
+    if(poziomDrona <= POZ_DNA){
+        std::cerr<<"Uderzyles w dno!"<<std::endl<<std::endl;
+        return true;
+    }
+    return false;
+}
+
+bool Dron::wykrywanieKolizjiZWoda(){
+    double poziomDrona = POZ_DNA - 1;
+
+    for(Wektor3D& elem : _ukladGlobalny){
+        elem(2) > poziomDrona?poziomDrona = elem(2):0;
+    }
+
+    if(poziomDrona >= POZ_WODY){
+        std::cerr<<"Jesteś na maksymalnie wynurzony!";
+        return true;
+    }
+    return false;
+}
+
 void Dron::dronPozaMapa(Wektor3D& po, Wektor3D& ko){
-    
+    //dron doplywa do max X planszy
+    if(_ukladGlobalny[0](0) > ko(0) - 4 * KROK_SIATKI){
+        ko(0) += 6 * KROK_SIATKI;
+        po(0) += 6 * KROK_SIATKI;
+    }
+
+    //dron doplywa do min X planszy
+    if(_ukladGlobalny[0](0) < po(0) + 4 * KROK_SIATKI){
+        ko(0) -= 6 * KROK_SIATKI;
+        po(0) -= 6 * KROK_SIATKI;
+    }
+
+    //dron doplywa do max Y planszy
+    if(_ukladGlobalny[0](1) > ko(1) - 4 * KROK_SIATKI){
+        ko(1) += 6 * KROK_SIATKI;
+        po(1) += 6 * KROK_SIATKI;
+    }
+
+    //dron doplywa do min Y planszy
+    if(_ukladGlobalny[0](1) < po(1) + 4 * KROK_SIATKI){
+        ko(1) -= 6 * KROK_SIATKI;
+        po(1) -= 6 * KROK_SIATKI;
+    }
 }
 
 std::string Dron::generujDronaDoPliku(){

@@ -7,10 +7,10 @@ void wypiszOpcje(){
 }
 bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
     char wpisanyZnak = 'm';
-    Wektor3D po = Wektor3D(-40, -40, 0);
-    Wektor3D ko = Wektor3D(100, 100, 100);
+    Wektor3D *po =new Wektor3D(-40, -40, 0);
+    Wektor3D *ko =new Wektor3D(100, 100, 100);
 
-    Scena *scena = new Scena(po, ko);
+    Scena *scena = new Scena(*po, *ko);
     Dron *dron = new Dron();
 
     while(wpisanyZnak != 'k'){
@@ -51,24 +51,33 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
             }
             std::cout<<std::endl<<std::endl;
             
-            for(int i = 0; i <= odleglosc; i++){
+            //(*dron).ruchNaWprost(katGoraDol, odleglosc);
+            
+            for(int i = 0; i < odleglosc; i++){
+                Scena *scena = new Scena(*po, *ko);
 
-                (*dron).ruchNaWprost(katGoraDol, i);
+                (*dron).ruchNaWprost(katGoraDol, 1);
+                (*dron).dronPozaMapa(*po, *ko);
                 (*scena).generujSceneDoPliku();
                 (*dron).generujDronaDoPliku();
+                if((*dron).wykrywanieKolizjiZDnem()){wpisanyZnak='k'; break;}
+                if((*dron).wykrywanieKolizjiZWoda()){katGoraDol>0 ? katGoraDol = 0:0;}
                 generujPlikGNU(*dron, *scena);
-                obslugaGNUplota(po, ko, Lacze);
-                sleep(1);
+                obslugaGNUplota(*po, *ko, Lacze);
+                usleep(100000);
 
+                delete scena;
             }
             
             
-            std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<po.ileTeraz()<<std::endl;
-            std::cout<<"Laczna ilosc obiektow> "<<po.ileWszystkie()<<std::endl;            
+            std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<(*po).ileTeraz()<<std::endl;
+            std::cout<<"Laczna ilosc obiektow> "<<(*po).ileWszystkie()<<std::endl;            
             break;
 
         case 'o':
             double obrot;
+            
+
             std::cout<<std::endl<<"Podaj wartosc kata obrotu w stopniach."<<std::endl;
             std::cout<<"Podaj kat obrotu: ";
             std::cin>>obrot;
@@ -76,11 +85,25 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                 std::cerr<<"Wczytywanie obrotu nie powiodlo sie!"<<std::endl;
                 return false;
             }
+            
+            for(int i = 0; i < obrot; i++){
+                Scena *scena = new Scena(*po, *ko);
 
-            (*dron).obrotWokolOZ(obrot);
+                (*dron).obrotWokolOZ(1);
+                (*scena).generujSceneDoPliku();
+                (*dron).generujDronaDoPliku();
+                generujPlikGNU(*dron, *scena);
+                obslugaGNUplota(*po, *ko, Lacze);
+                usleep(100000);
 
-            std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<po.ileTeraz()<<std::endl;
-            std::cout<<"Laczna ilosc obiektow> "<<po.ileWszystkie()<<std::endl;
+                delete scena;
+            }
+            
+
+            std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<(*po).ileTeraz()<<std::endl;
+            std::cout<<"Laczna ilosc obiektow> "<<(*po).ileWszystkie()<<std::endl;
+            
+            
             break;
 
         case 'm':
@@ -97,18 +120,15 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
             break;
         }
         std::cout<<std::endl<<std::endl;
-        
-        (*scena).generujSceneDoPliku();
-        (*dron).generujDronaDoPliku();
-        generujPlikGNU(*dron, *scena);
-        obslugaGNUplota(po, ko, Lacze);
     }
 
     delete scena;
     delete dron;
+    delete po;
+    delete ko;
 
-    std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<po.ileTeraz()<<std::endl;
-    std::cout<<"Laczna ilosc obiektow> "<<po.ileWszystkie()<<std::endl<<std::endl;
+    std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<(*po).ileTeraz()<<std::endl;
+    std::cout<<"Laczna ilosc obiektow> "<<(*po).ileWszystkie()<<std::endl<<std::endl;
     return true;
 }
 
@@ -128,7 +148,7 @@ void obslugaGNUplota(const Wektor3D& wektorP, const Wektor3D& wektorK, PzG::Lacz
     Lacze.UstawZakresX(wektorP(0), wektorK(0));
     Lacze.UstawZakresY(wektorP(1), wektorK(1));
     Lacze.UstawZakresZ(POZ_DNA-10, POZ_WODY+10);
-
+    std::cout<<wektorP<<std::endl;
     Lacze.UstawRotacjeXZ(80,80); // Tutaj ustawiany jest widok
     Lacze.Rysuj(); 
 }

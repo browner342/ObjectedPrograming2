@@ -14,7 +14,8 @@ public:
     void powrotDoUkladuLok();
     void obrotWokolOZ(const double& kat);
     void ruchNaWprost(const double& katGoraDol, const double& odleglosc);
-    bool wykrywanieKolizji(){}
+    bool wykrywanieKolizjiZDnem();
+    bool wykrywanieKolizjiZWoda();
     void dronPozaMapa(Wektor3D& po, Wektor3D& ko);
     std::string generujDronaDoPliku();
     std::string napis() const {return _napis;}
