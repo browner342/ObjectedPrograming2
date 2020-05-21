@@ -3,6 +3,7 @@
 
 #include "prostopadloscian.hh"
 #include "macierz3D.hh"
+#include <cmath>
 
 class Dron:public Prostopadloscian{
     double katZmianyUkladu = 0;
@@ -10,6 +11,12 @@ class Dron:public Prostopadloscian{
     std::vector <Wektor3D> _ukladGlobalny;
 public:
     Dron();
-    void ukladWokolOZ(const double& kat);
+    void powrotDoUkladuLok();
+    void obrotWokolOZ(const double& kat);
+    void ruchNaWprost(const double& katGoraDol, const double& odleglosc);
+    bool wykrywanieKolizji(){}
+    void dronPozaMapa(Wektor3D& po, Wektor3D& ko);
+    std::string generujDronaDoPliku();
+    std::string napis() const {return _napis;}
 };
 #endif

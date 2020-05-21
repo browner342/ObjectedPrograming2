@@ -41,7 +41,7 @@ public:
     * 
     * @param[in] nazwaPliku
     */
-    bool generujSceneDoPliku(const char *nazwaPliku);
+    std::string generujSceneDoPliku();
 
     /**
      * Funkcja zwracajaca napis sceny.

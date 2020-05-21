@@ -8,9 +8,9 @@ TRGDIR=/tmp/rysowanie_3D
 __start__: ./rysowanie_3D
 	./rysowanie_3D
 
-./rysowanie_3D: obj obj/main.o obj/lacze_do_gnuplota.o obj/wektor3D.o obj/scena.o obj/woda.o obj/dno.o obj/powierzchnia.o obj/prostopadloscian.o obj/dron.o obj/menu.o
+./rysowanie_3D: obj obj/main.o obj/lacze_do_gnuplota.o obj/wektor3D.o obj/scena.o obj/woda.o obj/dno.o obj/powierzchnia.o obj/prostopadloscian.o obj/dron.o obj/menu.o obj/macierz3D.o
 	g++ -Wall -pedantic -std=c++11 -o ./rysowanie_3D obj/main.o\
-                        obj/lacze_do_gnuplota.o obj/wektor3D.o obj/scena.o obj/woda.o obj/dno.o obj/powierzchnia.o obj/prostopadloscian.o obj/dron.o obj/menu.o
+                        obj/lacze_do_gnuplota.o obj/wektor3D.o obj/scena.o obj/woda.o obj/dno.o obj/powierzchnia.o obj/prostopadloscian.o obj/dron.o obj/menu.o obj/macierz3D.o
 
 
 obj:
@@ -46,7 +46,7 @@ obj/powierzchnia.o: src/powierzchnia.cpp inc/powierzchnia.hh inc/wektor3D.hh inc
 obj/wektor3D.o: src/wektor3D.cpp inc/wektor3D.hh inc/wektor.hh
 	g++ -c ${CXXFLAGS} -o obj/wektor3D.o src/wektor3D.cpp
 
-obj/macierz3D.o: src/macierz3D.cpp inc/macierz3D.hh inc/macierz.hh
+obj/macierz3D.o: src/macierz3D.cpp inc/macierz3D.hh inc/macierz.hh inc/wektor3D.hh
 	g++ -c ${CXXFLAGS} -o obj/macierz3D.o src/macierz3D.cpp
 
 clean:

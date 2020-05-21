@@ -1,7 +1,7 @@
 #include "scena.hh"
-bool Scena::generujSceneDoPliku(const char *nazwaPliku){    
-    std::ofstream Strm(nazwaPliku);
-    if (Strm.fail()) return false;
+std::string Scena::generujSceneDoPliku(){    
+    std::ofstream Strm(DNOIWODA);
+    if (Strm.fail()) std::cerr<<"Zapis Sceny do pliku się nie powiodl!"<<std::endl;
     
     _napis += (*this).woda->napis();
     _napis += "#\n\n";
@@ -9,5 +9,5 @@ bool Scena::generujSceneDoPliku(const char *nazwaPliku){
     _napis += "#\n\n";
 
     Strm<<_napis;
-    return true;
+    return _napis;
 }
