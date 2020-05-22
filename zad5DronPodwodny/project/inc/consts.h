@@ -10,6 +10,7 @@
 #define STOPNIENARADIANY 3.1415926535/180
 #define KATPIONMAX 90
 #define KATPIONMIN -90
+#define JEDNOSTKOWA 1
 
 #define PROSTOPADLOSCIAN "bryly/prostopadloscian.dat"
 #define DNOIWODA "bryly/powierzchnie.dat"

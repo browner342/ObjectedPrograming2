@@ -35,8 +35,10 @@ void Dron::obrotWokolOZ(const double& kat){
 void Dron::ruchNaWprost(const double& katGoraDol, const double& odleglosc){
     double katPoziomRAD = katZmianyUkladu * M_PI / 180;
     double katPionRAD = katGoraDol * M_PI / 180;
+    double xx = 90;
+    xx *= M_PI / 180;
 
-    Wektor3D tmp = Wektor3D(odleglosc*(-sin(katPoziomRAD)), odleglosc*cos(katPoziomRAD), odleglosc*sin(katPionRAD));
+    Wektor3D tmp = Wektor3D(odleglosc*(-sin(katPoziomRAD))*sin(xx - katPionRAD), odleglosc*cos(katPoziomRAD)*sin(xx - katPionRAD), odleglosc*sin(katPionRAD));
     wektorPrzesunieciaUkladu = wektorPrzesunieciaUkladu + tmp;
 
     for(Wektor3D& elem : _ukladGlobalny){
@@ -66,7 +68,11 @@ bool Dron::wykrywanieKolizjiZWoda(){
     }
 
     if(poziomDrona >= POZ_WODY){
-        std::cerr<<"Jesteś na maksymalnie wynurzony!"<<std::endl;
+        std::cerr<<"Jesteś na maksymalnie wynurzony!"<<std::endl<<std::endl;
+        
+        for(Wektor3D& elem : _ukladGlobalny){
+            elem(2) -= JEDNOSTKOWA;
+        }
         return true;
     }
     return false;

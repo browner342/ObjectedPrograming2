@@ -7,6 +7,7 @@ void wypiszOpcje(){
 }
 bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
     char wpisanyZnak;
+    int przemieszczenie = 1;
     Wektor3D *po =new Wektor3D(-40, -40, 0);
     Wektor3D *ko =new Wektor3D(100, 100, 100);
 
@@ -14,6 +15,7 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
     Dron *dron = new Dron();
 
     while(wpisanyZnak != 'k'){
+        przemieszczenie = 1;
         std::cout<<"Twoj wybor, m - menu> ";
         std::cin>>wpisanyZnak;
         if(std::cin.fail()){
@@ -54,7 +56,7 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
             for(int i = 0; i < odleglosc; i++){
                 Scena *scena = new Scena(*po, *ko);
 
-                (*dron).ruchNaWprost(katGoraDol, 1);
+                (*dron).ruchNaWprost(katGoraDol, przemieszczenie);
                 (*dron).dronPozaMapa(*po, *ko);
                 (*scena).generujSceneDoPliku();
                 (*dron).generujDronaDoPliku();
@@ -63,7 +65,10 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                 if((*dron).wykrywanieKolizjiZDnem()){return false;}
 
                 //podczas kontaktu z powierzchnia wody dron ma uniemozliwione dalsze wznoszenie sie
-                if((*dron).wykrywanieKolizjiZWoda()){katGoraDol>0 ? katGoraDol = 0:0;}
+                if((*dron).wykrywanieKolizjiZWoda()){
+                    katGoraDol == 90 ? przemieszczenie = 0:0;
+                    katGoraDol>0 ? katGoraDol = 0:0;
+                }
                 generujPlikGNU(*dron, *scena);
                 obslugaGNUplota(*po, *ko, Lacze);
                 usleep(100000);
@@ -88,18 +93,35 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                 return false;
             }
             
-            for(int i = 0; i < obrot; i++){
-                Scena *scena = new Scena(*po, *ko);
+            if(obrot < 0){
+                obrot *= -1;
+                for(int i = 0; i < obrot; i++){
+                    Scena *scena = new Scena(*po, *ko);
 
-                (*dron).obrotWokolOZ(1);
-                (*scena).generujSceneDoPliku();
-                (*dron).generujDronaDoPliku();
-                generujPlikGNU(*dron, *scena);
-                obslugaGNUplota(*po, *ko, Lacze);
-                usleep(100000);
+                    (*dron).obrotWokolOZ(-1);
+                    (*scena).generujSceneDoPliku();
+                    (*dron).generujDronaDoPliku();
+                    generujPlikGNU(*dron, *scena);
+                    obslugaGNUplota(*po, *ko, Lacze);
+                    usleep(100000);
 
-                delete scena;
+                    delete scena;
+                }
+            }else{            usleep(100000);
+
+                for(int i = 0; i < obrot; i++){
+                    Scena *scena = new Scena(*po, *ko);
+
+                    (*dron).obrotWokolOZ(1);
+                    (*scena).generujSceneDoPliku();
+                    (*dron).generujDronaDoPliku();
+                    generujPlikGNU(*dron, *scena);
+                    obslugaGNUplota(*po, *ko, Lacze);
+        
+                    delete scena;
+                }
             }
+            
             
             std::cout<<"Aktualna ilosc obiektow Wektor3D> "<<(*po).ileTeraz()<<std::endl;
             std::cout<<"Laczna ilosc obiektow> "<<(*po).ileWszystkie()<<std::endl;
