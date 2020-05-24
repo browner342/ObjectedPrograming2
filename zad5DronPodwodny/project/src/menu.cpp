@@ -71,7 +71,7 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                 }
                 generujPlikGNU(*dron, *scena);
                 obslugaGNUplota(*po, *ko, Lacze);
-                usleep(100000);
+                usleep(SLEEP);
 
                 delete scena;
             }
@@ -103,12 +103,11 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                     (*dron).generujDronaDoPliku();
                     generujPlikGNU(*dron, *scena);
                     obslugaGNUplota(*po, *ko, Lacze);
-                    usleep(100000);
+                    usleep(SLEEP);
 
                     delete scena;
                 }
-            }else{            usleep(100000);
-
+            }else{ 
                 for(int i = 0; i < obrot; i++){
                     Scena *scena = new Scena(*po, *ko);
 
@@ -117,6 +116,7 @@ bool otworzMenu(PzG::LaczeDoGNUPlota  Lacze){
                     (*dron).generujDronaDoPliku();
                     generujPlikGNU(*dron, *scena);
                     obslugaGNUplota(*po, *ko, Lacze);
+                    usleep(SLEEP);
         
                     delete scena;
                 }

@@ -2,6 +2,7 @@
 #define SCENA_HH
 #include "woda.hh"
 #include "dno.hh"
+#include "dron.hh"
 #include <string>
 #include <fstream>
 #include <cstdlib>
@@ -20,6 +21,8 @@ class Scena{
      */
     Woda *woda;
 
+    Dron *dron;
+
     /**
      * Pole zawierajace string utworzonej sceny.
      */
@@ -32,12 +35,14 @@ public:
      * @param[in] poczatek - wektorowy poczatek zakresu
      * @param[in] koniec - wektorowy koniec zakresu 
      */
-    Scena(Wektor3D zakresP, Wektor3D zakresK){woda = new Woda(zakresP, zakresK);dno = new Dno(zakresP, zakresK);}
+    Scena(Wektor3D zakresP, Wektor3D zakresK){woda = new Woda(zakresP, zakresK);dno = new Dno(zakresP, zakresK); /*dron = new Dron();*/}
     
     /**
      * Destruktor sceny
      */
     ~Scena(){delete woda; delete dno;}
+
+    void aktualizujScene(Wektor3D zakresP, Wektor3D zakresK);
 
     /**
      * Funkcja generujuje wartosci dna oraz wody, po czym zwraca je do pliku

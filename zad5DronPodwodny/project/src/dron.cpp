@@ -35,10 +35,10 @@ void Dron::obrotWokolOZ(const double& kat){
 void Dron::ruchNaWprost(const double& katGoraDol, const double& odleglosc){
     double katPoziomRAD = katZmianyUkladu * M_PI / 180;
     double katPionRAD = katGoraDol * M_PI / 180;
-    double xx = 90;
-    xx *= M_PI / 180;
+    double katProsty = 90;
+    katProsty *= M_PI / 180;
 
-    Wektor3D tmp = Wektor3D(odleglosc*(-sin(katPoziomRAD))*sin(xx - katPionRAD), odleglosc*cos(katPoziomRAD)*sin(xx - katPionRAD), odleglosc*sin(katPionRAD));
+    Wektor3D tmp = Wektor3D(odleglosc*(-sin(katPoziomRAD))*sin(katProsty - katPionRAD), odleglosc*cos(katPoziomRAD)*sin(katProsty - katPionRAD), odleglosc*sin(katPionRAD));
     wektorPrzesunieciaUkladu = wektorPrzesunieciaUkladu + tmp;
 
     for(Wektor3D& elem : _ukladGlobalny){
